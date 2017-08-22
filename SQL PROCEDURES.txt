@@ -1,0 +1,39 @@
+--My Two Tables
+
+CREATE TABLE [dbo].[Policy](
+	[PolicyID] [int] IDENTITY(1,1) NOT NULL,
+	[PolicyName] [varchar](50) NOT NULL
+
+
+CREATE TABLE [dbo].[Option](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [int] NOT NULL
+
+
+--My two procedures spGetOption for all Option from 1st DropDownList 2nd spGetPolicyByOptionId is to Set which value retrive from table depends
+--to parameter @OptionId which you must to pass. Exp. if you execute spGetOption1 it will show 1st if element.
+
+Create Procedure spGetOption
+as
+Begin
+	Select ID,Name from dbo.[Option]
+End
+
+
+Create Procedure spGetPolicyByOptionId 
+@OptionId int 
+as
+Begin
+IF(@OptionId = 1)
+    BEGIN
+    Select PolicyID,PolicyName from dbo.[Policy]
+	where PolicyID IN (2,3,5)
+    END
+ELSE IF(@OptionId = 2)
+    BEGIN
+     Select PolicyID,PolicyName from dbo.[Policy]
+	 where PolicyID IN (1,4)
+    END
+End
+
+
